@@ -110,7 +110,7 @@
       outline-offset: 2px;
     }
 
-    /* The app's own icon on a dark banner, tinted with its color, so games are easy to spot. */
+    /* The game's own logo on a dark banner, tinted with the app's color, so games are easy to spot. */
     .logo {
       display: grid;
       place-items: center;
@@ -123,8 +123,7 @@
       width: auto;
       height: auto;
       max-width: 100%;
-      max-height: 76px;
-      border-radius: 16px;
+      max-height: 68px;
     }
         .info {
       display: flex;
@@ -194,11 +193,11 @@
       </div>
     </header>
 
-    <!-- To add a game: copy an <li>, change the folder name, title, description, rulesets and accent color. -->
+    <!-- To add a game: copy an <li>, change the folder name, logo (in site/logos), title, description, rulesets and accent color. -->
     <ul class="grid">
       <li>
         <a class="app" href="xwing/" style="--accent: #ff8a3d">
-          <div class="logo"><img src="xwing/icon.svg" alt=""></div>
+          <div class="logo"><img src="logos/xwing.png" alt="Star Wars: X-Wing"></div>
           <div class="info">
             <img class="icon" src="xwing/pwa-192x192.png" alt="">
             <div>
@@ -211,7 +210,7 @@
       </li>
       <li>
         <a class="app" href="armada/" style="--accent: #38bdf8">
-          <div class="logo"><img src="armada/icon.svg" alt=""></div>
+          <div class="logo"><img src="logos/armada.png" alt="Star Wars: Armada"></div>
           <div class="info">
             <img class="icon" src="armada/pwa-192x192.png" alt="">
             <div>
@@ -227,7 +226,7 @@
     <footer>
       Every app works offline, with homebrew rules and a match tracker. Lists stay on your device · <a href="../">Milk's Apps</a><br>
       X-Wing cards from <a href="https://github.com/xwingtmg/xwing-data2">xwing-data2</a>, points from <a href="https://github.com/eirikmun/xwing-points">xwing-points</a> · Armada cards from <a href="https://github.com/videege/flagship">Flagship</a><br>
-      Game names are trademarks of their owners; this is an unofficial fan project.
+      Game names and logos are trademarks of their owners; this is an unofficial fan project.
     </footer>
   </main>
 </body>
