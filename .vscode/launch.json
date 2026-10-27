@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "edge",
+      "request": "launch",
+      "name": "X-Wing (Edge)",
+      "url": "http://localhost:5190",
+      "webRoot": "${workspaceFolder}/apps/xwing"
+    },
+    {
+      "type": "edge",
+      "request": "launch",
+      "name": "Armada (Edge)",
+      "url": "http://localhost:5191",
+      "webRoot": "${workspaceFolder}/apps/armada"
+    }
+  ]
+}

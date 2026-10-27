@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milk's List Builders</title>
+  <meta name="description" content="Miniatures game list builders with rules, homebrew and a match tracker">
+  <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <!-- Plain page on purpose, matching Milk's Apps: no service worker, so it can't interfere with the apps' own. -->
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 2px rgb(15 23 42 / 0.06), 0 4px 12px rgb(15 23 42 / 0.06);
+      --focus: #2563eb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+        --border: #334155;
+        --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 12px rgb(0 0 0 / 0.25);
+        --focus: #60a5fa;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 16px 64px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .brand img {
+      flex: none;
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      letter-spacing: -0.01em;
+    }
+    .subtitle {
+      margin: 2px 0 0;
+      color: var(--muted);
+    }
+    /* The game colors, as a thin stripe under the title. */
+    .stripe {
+      display: flex;
+      gap: 4px;
+      margin-top: 10px;
+    }
+    .stripe span {
+      width: 28px;
+      height: 4px;
+      border-radius: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--accent);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .app:hover { transform: translateY(-2px); }
+    .app:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* The app's own icon on a dark banner, tinted with its color, so games are easy to spot. */
+    .logo {
+      display: grid;
+      place-items: center;
+      height: 96px;
+      padding: 0 24px;
+      background: radial-gradient(ellipse at 50% 130%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 70%), #0b1020;
+    }
+    .logo img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 76px;
+      border-radius: 16px;
+    }
+        .info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px 16px;
+    }
+    .icon {
+      flex: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    .app h2 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .app p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .formats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 8px;
+    }
+    .formats span {
+      padding: 1px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    footer {
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    footer a { color: inherit; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .app { transition: none; }
+      .app:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="brand">
+      <img src="icon.svg" alt="">
+      <div>
+        <h1>Milk's List Builders</h1>
+        <p class="subtitle">Build lists for miniatures games, keep house rules, and track your matches.</p>
+        <div class="stripe" aria-hidden="true">
+          <span style="background: #ff8a3d"></span>
+          <span style="background: #38bdf8"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- To add a game: copy an <li>, change the folder name, title, description, rulesets and accent color. -->
+    <ul class="grid">
+      <li>
+        <a class="app" href="xwing/" style="--accent: #ff8a3d">
+          <div class="logo"><img src="xwing/icon.svg" alt=""></div>
+          <div class="info">
+            <img class="icon" src="xwing/pwa-192x192.png" alt="">
+            <div>
+              <h2>Milk's X-Wing Squad Builder</h2>
+              <p>Star Wars: X-Wing</p>
+              <div class="formats"><span>X-Wing Alliance</span><span>AMG final</span><span>2.0 Legacy</span></div>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a class="app" href="armada/" style="--accent: #38bdf8">
+          <div class="logo"><img src="armada/icon.svg" alt=""></div>
+          <div class="info">
+            <img class="icon" src="armada/pwa-192x192.png" alt="">
+            <div>
+              <h2>Milk's Armada Fleet Builder</h2>
+              <p>Star Wars: Armada</p>
+              <div class="formats"><span>Standard 400</span><span>Homebrew</span></div>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <footer>
+      Every app works offline, with homebrew rules and a match tracker. Lists stay on your device · <a href="../">Milk's Apps</a><br>
+      X-Wing cards from <a href="https://github.com/xwingtmg/xwing-data2">xwing-data2</a>, points from <a href="https://github.com/eirikmun/xwing-points">xwing-points</a> · Armada cards from <a href="https://github.com/videege/flagship">Flagship</a><br>
+      Game names are trademarks of their owners; this is an unofficial fan project.
+    </footer>
+  </main>
+</body>
+</html>

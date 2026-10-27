@@ -1,0 +1,9 @@
+node_modules
+dist
+dev-dist
+*.local
+.vs
+obj
+bin
+# X-Wing card data and points are downloaded fresh by "npm run data" (and weekly by the deploy workflow).
+apps/xwing/public/data

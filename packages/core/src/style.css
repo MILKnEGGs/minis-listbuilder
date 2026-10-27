@@ -1,0 +1,245 @@
+/* Shared look for every list builder (the same as Milk's Deck Builders). A game app can override --accent in its own CSS. */
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0f1a;
+  --panel: #131a29;
+  --panel-2: #1a2336;
+  --line: #263046;
+  --text: #e6e9f0;
+  --muted: #94a0b8;
+  --accent: #f5c542;
+  --accent-ink: #1a1405;
+  --error: #f87171;
+  --error-bg: #3a1618;
+  --warning: #fbbf24;
+  --warning-bg: #352a10;
+  --ok: #4ade80;
+  /* Match tracker stat colors. */
+  --attack: #f87171;
+  --agility: #4ade80;
+  --hull: #facc15;
+  --shields: #60a5fa;
+  --charge: #fb923c;
+  --force: #c084fc;
+  --radius: 10px;
+  --shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  color: var(--accent);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  border-radius: 8px;
+  padding: 7px 12px;
+  line-height: 1.2;
+}
+button:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+button.ghost {
+  background: transparent;
+  border-color: transparent;
+}
+button.ghost:hover:not(:disabled) {
+  background: var(--panel-2);
+  border-color: var(--line);
+}
+button.danger {
+  color: var(--error);
+}
+
+/* Phones zoom into any field under 16px when you tap it (and often stay zoomed), so fields get 16px there. */
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+input[type='text'],
+input[type='search'],
+select,
+textarea {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  min-width: 0;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.chip {
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  background: transparent;
+}
+.chip.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 0.85rem;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+dialog {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: var(--shadow);
+  max-width: min(560px, calc(100vw - 24px));
+  width: 100%;
+  max-height: calc(100dvh - 24px);
+}
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.65);
+}
+
+/* Page layout shared by every screen. */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.field {
+  display: grid;
+  gap: 4px;
+}
+.field > span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.error {
+  color: var(--error);
+}
+.warning {
+  color: var(--warning);
+}
+.dialog-body {
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+.dialog-body h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+/* Card rules text: paragraphs, with game symbols like [Focus] picked out. */
+.rules p {
+  margin: 0 0 6px;
+}
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tag.custom {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+/* Search boxes have their own clear button. */
+input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}

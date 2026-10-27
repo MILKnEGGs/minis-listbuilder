@@ -1,0 +1,12 @@
+{
+  "name": "@milk/minis-core",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Shared list builder: list model, rulesets and homebrew, storage, match tracker and the whole UI. Each game app supplies a GameDef.",
+  "exports": {
+    "./*.svelte": "./src/components/*.svelte",
+    "./style.css": "./src/style.css",
+    "./*": "./src/*.ts"
+  }
+}

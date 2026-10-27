@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0a0e14"/>
+  <g fill="#ffffff" opacity="0.55">
+    <circle cx="90" cy="96" r="5"/>
+    <circle cx="430" cy="110" r="4"/>
+    <circle cx="450" cy="400" r="5"/>
+    <circle cx="70" cy="420" r="3"/>
+  </g>
+  <!-- A star destroyer wedge from above, with its bridge tower. -->
+  <path d="M256 70 L410 400 Q256 440 102 400 Z" fill="#1a232f" stroke="#38bdf8" stroke-width="16" stroke-linejoin="round"/>
+  <path d="M256 150 L256 380" stroke="#38bdf8" stroke-width="10" stroke-linecap="round" opacity="0.6"/>
+  <rect x="216" y="300" width="80" height="50" rx="8" fill="#38bdf8"/>
+  <rect x="236" y="276" width="40" height="30" rx="6" fill="#7dd3fc"/>
+</svg>
