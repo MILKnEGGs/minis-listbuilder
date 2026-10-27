@@ -6,7 +6,7 @@
   import { importListJson, listCost, newList, summarize, validate } from '../list';
   import { allRulesets, resolveRuleset } from '../ruleset';
   import type { Catalog, GameDef, Homebrew, List, Unit, Upgrade } from '../types';
-  import { uid } from '../util';
+  import { plural, uid } from '../util';
 
   let { game, homebrews, reloadHomebrew: _ }: { game: GameDef<U, G>; homebrews: Homebrew[]; reloadHomebrew: () => Promise<void> } = $props();
 
@@ -17,6 +17,8 @@
   const rulesets = $derived(allRulesets(game, homebrews));
   const sorted = $derived([...lists].sort((a, b) => b.updated - a.updated));
   const noun = $derived(game.noun);
+  /** "ship" from "Ships", for counts like "1 ship". */
+  const unitWord = $derived(game.kinds[0].toLowerCase().replace(/s$/, ''));
 
   let newDialog = $state<HTMLDialogElement>();
   let newName = $state('');
@@ -99,7 +101,7 @@
 </script>
 
 <header class="page">
-  <div class="grow">
+  <div class="title">
     <p class="back small"><a href="../">← All games</a></p>
     <h1>{game.title}</h1>
     <p class="muted small">{game.game} · {lists.length ? `${lists.length} ${noun}${lists.length === 1 ? '' : 's'}` : `no ${noun}s yet`}</p>
@@ -130,7 +132,7 @@
           <span class="muted small">{factionName(l.faction)} · {r.name}{l.mode && r.modes ? ` · ${r.modes.find((m) => m.id === l.mode)?.name ?? l.mode}` : ''}</span>
           <span class="stats small">
             <span class="num" class:over={pts != null && pts > r.limit}>{pts ?? '…'}/{r.limit} points</span>
-            <span class="num">{l.units.length} {game.kinds[0].toLowerCase()}</span>
+            <span class="num">{plural(l.units.length, unitWord)}</span>
             {#if cat}<span>{summarize(validate(game, l, cat))}</span>{/if}
           </span>
         </button>
@@ -194,7 +196,7 @@
     <textarea rows="8" bind:value={importText} oninput={readImport} placeholder="Paste here"></textarea>
     {#if importError}<p class="error small">{importError}</p>{/if}
     {#if imported}
-      <p class="small">Found {imported.units?.length ?? 0} {game.kinds[0].toLowerCase()}{imported.name ? ` in "${imported.name}"` : ''}.</p>
+      <p class="small">Found {plural(imported.units?.length ?? 0, unitWord)}{imported.name ? ` in "${imported.name}"` : ''}.</p>
       {#if imported.skipped?.length}
         <p class="error small">Not recognised: {imported.skipped.slice(0, 8).join(', ')}{imported.skipped.length > 8 ? '…' : ''}</p>
       {/if}
@@ -215,6 +217,11 @@
     align-items: flex-end;
     padding-top: 16px;
     padding-bottom: 12px;
+  }
+  /* Takes the whole row on phones, so the buttons wrap below it instead of squeezing it. */
+  .title {
+    flex: 1 1 280px;
+    min-width: 0;
   }
   h1 {
     margin: 0;
